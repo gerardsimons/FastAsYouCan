@@ -535,12 +535,13 @@ class Segment(object):
 
 def connect_to_db(app):
     """Connect to the database."""
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///model.db'
-    app.config['SQLALCHEMY-ECHO'] = True
-    db.app = app
-    db.init_app(app)
-    db.create_all()
+    with app.app_context():
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///model.db'
+        app.config['SQLALCHEMY-ECHO'] = True
+        db.app = app
+        db.init_app(app)
+        db.create_all()
 
 connect_to_db(app)
 
-print "Connected to Model.db"
+print("Connected to Model.db")
